@@ -90,12 +90,12 @@ public class ControlBiblioTech {
         return eliminados;
     }
 
-    //@Lazaro Garcia inciso e
+    //@Lazaro Gabriel Garcia Enriquez inciso e
     Libro buscarLibroConMAsDias(){
-        Libro mejorLibro = prestamos.get(0);
         if(prestamos.isEmpty()){
             throw new IllegalStateException("La lista esta vacia");
         }
+        Libro mejorLibro = prestamos.get(0);
         for (int i = 1; i < prestamos.size(); i++) {
             Libro libro = prestamos.get(i);
             if (libro.getDias() > mejorLibro.getDias()) {
