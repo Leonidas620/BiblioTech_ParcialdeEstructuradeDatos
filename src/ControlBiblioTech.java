@@ -22,3 +22,34 @@ public class ControlBiblioTech {
         return Math.round(sumaDias / cantLibrosPorCategoria);
     }
 }
+public int EliminarLibrosPorCategoria(String categoria) {
+
+    if (prestamos.isEmpty()) {
+        throw new IllegalStateException(
+                "El catálogo está vacío. No se puede eliminar por categoría.");
+    }
+    if (categoria == null || categoria.trim().isEmpty()) {
+        throw new IllegalArgumentException(
+                "La categoría no puede ser nula ni vacía.");
+    }
+
+    int eliminados = 0;
+    Iterator<Libro> it = prestamos.iterator();
+
+    for(int i = 0, i<prestamos.size()) {
+        Comparación sin distinguir mayúsculas/minúsculas
+        if (prestamos.get(i).getCategoria().equalsIgnoreCase(categoria.trim())) {
+            prestamos.remove(i); // Eliminación segura durante la iteración
+            eliminados++;
+        }
+    }
+
+    if (eliminados == 0) {
+        throw new IllegalStateException(
+                "No se encontraron libros de la categoría: " + categoria);
+    }
+
+    return eliminados;
+}
+
+
