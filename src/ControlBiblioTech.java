@@ -1,8 +1,36 @@
 public class ControlBiblioTech {
     public ArrayList prestamos = new ArrayList();
     //Metodos desarrollados
+    // @Emily Elena Concha Morejon inciso a
+    public ArrayList<String> LibrosVencidos(int diasLimite) {
+        if (diasLimite < 0) {
+            throw new IllegalArgumentException("El límite de días no puede ser negativo.");
+        }
 
-    // @Dario Riverol Herrera
+        if (prestamos == null || prestamos.isEmpty()) {
+            throw new IllegalStateException("No hay libros registrados en el catálogo.");
+        }
+
+        ArrayList<String> titulosVencidos = new ArrayList<>();
+
+        for (int i = 0; i < prestamos.size(); i++) {
+            Libro libro = prestamos.get(i);
+            if (libro == null) {
+                throw new IllegalStateException("Se encontró un libro nulo en la posición " + i + ".");
+            }
+            if (libro.getDiasDePrestamo() > diasLimite) {
+                titulosVencidos.add(libro.getTitulo());
+            }
+        }
+
+        if (titulosVencidos.isEmpty()) {
+            throw new IllegalStateException("No hay libros vencidos con ese límite.");
+        }
+
+        return titulosVencidos;
+    }
+
+    // @Dario Riverol Herrera inciso b
     public int promedioDiasPorCategoria(String categoria){
         if (prestamos.isEmpty()) {
             throw new NullPointerException("La lista esta vacia");
@@ -22,7 +50,27 @@ public class ControlBiblioTech {
         return Math.round(sumaDias / cantLibrosPorCategoria);
     }
 }
-public int EliminarLibrosPorCategoria(String categoria) {
+//@Martha Alina Montane Arias inciso c
+public boolean renovarPrestamo(String codigo, int diasAdicionales) {
+
+    if (codigo == null || diasAdicionales <= 0) {
+        return false;
+    }
+
+    for (int i = 0; i < prestamos.size(); i++) {
+        Libro libro = prestamos.get(i);
+        if (libro.getCodigo().equalsIgnoreCase(codigo)) {
+            libro.setDiasPrestamo(libro.getDiasPrestamo() + diasAdicionales);
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
+//@Cesar Paredes Real inciso d
+    public int EliminarLibrosPorCategoria(String categoria) {
 
     if (prestamos.isEmpty()) {
         throw new IllegalStateException(
