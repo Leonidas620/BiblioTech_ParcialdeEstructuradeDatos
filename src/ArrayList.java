@@ -1,4 +1,4 @@
-public class ArrayList implements List{
+public class ArrayList<T> implements List<T>{
     private Object[] datos;
     private int cantidad;
 
@@ -25,20 +25,25 @@ public class ArrayList implements List{
     }
 
     @Override
-    public void add(Object dato) {
+    public void add(T dato) {
         asegurarCapacidad();
         datos[cantidad] = dato;
         cantidad++;
     }
 
     @Override
-    public void add(Object dato, int index) {
+    public void add(T dato, int index) {
         validarIndice(index);
+        asegurarCapacidad();
+        for (int i = cantidad; i > index; i--) {
+            datos[i] = datos[i - 1];
+        }
         datos[index] = dato;
+        cantidad++;
     }
 
     @Override
-    public Object remove(int index) {
+    public T remove(int index) {
         validarIndice(index);
         Object eliminado = get(index);
         for (int i = index; i < cantidad - 1; i++) {
@@ -46,13 +51,13 @@ public class ArrayList implements List{
         }
         datos[cantidad - 1] = null;
         cantidad--;
-        return eliminado;
+        return (T) eliminado;
     }
 
     @Override
-    public Object get(int index) {
+    public T get(int index) {
         validarIndice(index);
-        return datos[index];
+        return (T) datos[index];
     }
 
     @Override
